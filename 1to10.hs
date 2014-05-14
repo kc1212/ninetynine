@@ -65,8 +65,6 @@ pack (x:xs)
 		p = pack xs
 
 -- 10
-encodeOne :: Eq a => [a] -> (Int, a)
-encodeOne x = (length x, head x)
 encode :: Eq a => [a] -> [(Int, a)]
-encode xs = map encodeOne (pack xs)
+encode xs = map (\x -> (length x, head x)) (pack xs)
 
