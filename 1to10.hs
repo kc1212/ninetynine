@@ -55,6 +55,18 @@ compress (x:xs)
 	| otherwise = x : compress xs
 
 -- 9
+pack :: Eq a => [a] -> [[a]]
+pack [] = []
+pack [a] = [[a]]
+pack (x:xs)
+	| x == head xs = ( x:(head p) ) : tail p
+	| otherwise = [x] : p
+	where
+		p = pack xs
 
-
+-- 10
+encodeOne :: Eq a => [a] -> (Int, a)
+encodeOne x = (length x, head x)
+encode :: Eq a => [a] -> [(Int, a)]
+encode xs = map encodeOne (pack xs)
 
