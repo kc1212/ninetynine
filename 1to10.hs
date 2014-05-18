@@ -40,7 +40,7 @@ isPalindrome xs =
 -- or just check the reverse
 
 -- 7
-data NestedList a = Elem a | List [NestedList a]
+data NestedList a = Elem a | List [NestedList a] deriving (Show)
 flatten :: NestedList a -> [a]
 flatten (Elem a) = [a]
 flatten (List []) = []
