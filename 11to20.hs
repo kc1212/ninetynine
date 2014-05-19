@@ -37,7 +37,36 @@ repli [] _ = []
 repli (x:xs) n = (take n $ cycle [x]) ++ (repli xs n)
 
 -- 16
--- dropEvery :: [a] -> Int -> [a]
+dropEvery :: [a] -> Int -> [a]
+dropEvery [] _ = []
+dropEvery xs n
+	| rem (length xs) n == 0 = dropEvery (init xs) n
+	| otherwise = (dropEvery (init xs) n) ++ [last xs]
+
+-- 17
+split :: [a] -> Int -> ([a], [a])
+split [] _ = ([],[])
+split (x:xs) n
+	| n > 0 = (x : fst (split xs $ n-1), snd (split xs $ n-1))
+	| otherwise = (fst (split xs $ n-1), x : snd (split xs $ n-1))
+
+-- 18
+lastN :: Int -> [a] -> [a]
+lastN n xs = drop (length xs - n) xs
+
+slice :: [a] -> Int -> Int -> [a]
+slice [] _ _ = []
+slice xs a b = take (b-a+1) step1
+	where
+		step1 = lastN ((length xs)-a+1) xs
+
+-- 19
+rotate :: [a] -> Int -> [a]
+rotate [] _ = []
+rotate xs 0 = xs
+rotate (x:xs) n = rotate (xs ++ [x]) $ n-1
+
+-- 20
 
 
 
