@@ -67,6 +67,13 @@ rotate xs 0 = xs
 rotate (x:xs) n = rotate (xs ++ [x]) $ n-1
 
 -- 20
+-- here we use 0 as start of index, unlike the question
+removeAt :: Int -> [a] -> (a,[a])
+removeAt _ [] = error "Empty list"
+removeAt 0 (x:xs) = (x, xs)
+removeAt n (x:xs) = (one, x:two)
+	where
+		(one, two) = removeAt (n-1) (xs)
 
 
 
