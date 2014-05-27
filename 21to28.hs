@@ -1,3 +1,4 @@
+import System.Random
 
 -- 21
 insertAt :: a -> [a] -> Int -> [a]
@@ -12,7 +13,9 @@ range a b
 	| otherwise = error "a is larger than b."
 
 -- 23
-
+rndSelect xs n = do
+	stdGen <- getStdGen
+	return $ take n [xs !! x | x <- randomRs (0,(length xs) - 1) $ stdGen]
 
 
 
