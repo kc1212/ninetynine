@@ -12,11 +12,29 @@ range a b
 	| a == b = [a]
 	| otherwise = error "a is larger than b."
 
--- 23
+-- 23 TODO: can the result be repeated?
+rndSelect :: [a] -> Int -> IO [a]
+rndSelect _ 0 = do
+	return []
 rndSelect xs n = do
-	stdGen <- getStdGen
-	return $ take n [xs !! x | x <- randomRs (0,(length xs) - 1) $ stdGen]
+	gen    <- getStdGen
+	value  <- xs !! (randomRs (0, (length xs)-1) gen !! 0)
+	xss    <- rndSelect (removeItem value xs) (n-1)
+	return $  [value] ++ xss
 
+
+-- 24
+-- diffSelect :: Int -> Int -> IO Int
+-- diffSelect n m = do
+-- 	stdGen <- getStdGen
+-- 	return $ take n 
+
+
+-- utils
+removeItem _ [] = []
+removeItem x (y:ys)
+	| x == y = removeItem x ys
+	| otherwise = y : removeItem x ys
 
 
 
