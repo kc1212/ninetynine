@@ -1,4 +1,4 @@
-import System.Random
+import System.Random (randomRIO)
 
 -- 21
 insertAt :: a -> [a] -> Int -> [a]
@@ -12,16 +12,14 @@ range a b
 	| a == b = [a]
 	| otherwise = error "a is larger than b."
 
--- 23 TODO: can the result be repeated?
-rndSelect :: [a] -> Int -> IO [a]
-rndSelect _ 0 = do
-	return []
+-- 23
+rndSelect :: Eq a => [a] -> Int -> IO [a]
+rndSelect _ 0  = return []
+rndSelect [] _ = return []
 rndSelect xs n = do
-	gen    <- getStdGen
-	value  <- xs !! (randomRs (0, (length xs)-1) gen !! 0)
-	xss    <- rndSelect (removeItem value xs) (n-1)
-	return $  [value] ++ xss
-
+	i <- randomInt (length xs)
+	new <- rndSelect (removeItem (xs!!i) xs) (n-1)
+	return $ (xs!!i) : new
 
 -- 24
 -- diffSelect :: Int -> Int -> IO Int
@@ -31,11 +29,16 @@ rndSelect xs n = do
 
 
 -- utils
+removeItem :: Eq a => a -> [a] -> [a]
 removeItem _ [] = []
 removeItem x (y:ys)
 	| x == y = removeItem x ys
 	| otherwise = y : removeItem x ys
 
+randomInt :: Int -> IO Int
+randomInt x = do
+	c <- randomRIO (0,x-1) -- note the -1
+	return c
 
 
 
